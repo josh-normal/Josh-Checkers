@@ -3,19 +3,23 @@
 }
 
 body {
-  background-color: rgb(235, 228, 214);
+  background-color: rgb(233, 205, 150);
   height: 100vh;
   margin: 0;
   display: flex;
   justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .body {
   display: grid;
-  grid-template: 60% 40% / 1fr 1fr;
+  grid-template: 1fr 1fr / 1fr 1fr;
   grid-template-areas:
     "game turn"
     "game info";
+  margin: 0;
+  padding: 0;
+  grid-gap: 5px 50px;
 }
 
 .game {
@@ -23,19 +27,19 @@ body {
   align-self: center;
   margin: 0;
   padding: 0;
-  height: 404px;
-  min-width: 404px;
+  height: 604px;
+  min-width: 604px;
   background-color: black;
 }
 tbody {
   margin: 0;
   padding: 0;
-  height: 400px;
+  height: 600px;
 }
 td {
   margin: 0;
   padding: 0;
-  width: 50px;
+  width: 75px;
   background-color: black;
   border: 1px solid white;
 }
@@ -45,13 +49,59 @@ td {
 
 .turn {
   grid-area: turn;
-  background-color: rgba(255, 182, 193, 0.618);
+  align-self: flex-end;
+  height: 300px;
+  width: 604px;
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  text-align: center;
+  flex-wrap: wrap-reverse;
+  margin: 0;
+  padding: 0;
 }
-div > img {
-  height: 100px;
+.subturn2 > h1,
+img,
+p {
+  margin: 0;
+  padding: 0;
+}
+.subturn2 > img {
+  height: 200px;
+}
+.subturn2 > p {
+  font-size: 20px;
+}
+.subturn1 {
+  font-size: 35px;
+  margin: 40px auto;
+  color: ;
+}
+.black {
+  border: 10px solid black;
+  border-radius: 15%;
+}
+.red {
+  border: 10px solid red;
+  border-radius: 15%;
 }
 
 .info {
   grid-area: info;
-  background-color: rgba(173, 216, 230, 0.508);
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.info > h1 {
+  font-size: 40px;
+  margin: 50px auto;
+  color: ;
+}
+button {
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  width: 200px;
+  font-size: 30px;
+  align-self: center;
 }

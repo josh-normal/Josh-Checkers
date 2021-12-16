@@ -18,7 +18,9 @@ Checkers remains a popular game around the world today. For many children, it’
 
 # Reviews
 
-<IMAGE>
+![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview1.png)
+
+![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview2.png)
 
 # Technologies Used:
 
