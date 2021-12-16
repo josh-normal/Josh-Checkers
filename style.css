@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(235, 228, 214);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.body {
+  display: grid;
+  grid-template: 60% 40% / 1fr 1fr;
+  grid-template-areas:
+    "game turn"
+    "game info";
+}
+
+.game {
+  grid-area: game;
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  height: 404px;
+  min-width: 404px;
+  background-color: black;
+}
+tbody {
+  margin: 0;
+  padding: 0;
+  height: 400px;
+}
+td {
+  margin: 0;
+  padding: 0;
+  width: 50px;
+  background-color: black;
+  border: 1px solid white;
+}
+.yes {
+  background-color: white;
+}
+
+.turn {
+  grid-area: turn;
+  background-color: rgba(255, 182, 193, 0.618);
+}
+div > img {
+  height: 100px;
+}
+
+.info {
+  grid-area: info;
+  background-color: rgba(173, 216, 230, 0.508);
+}
