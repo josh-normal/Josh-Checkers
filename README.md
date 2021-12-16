@@ -2,7 +2,9 @@
 
 # Description:
 
-checkers, also called draughts, board game, one of the world’s oldest games. Checkers is played by two persons who oppose each other across a board of 64 light and dark squares, the same as a chessboard. The 24 playing pieces are disk-shaped and of contrasting colours. At the start of the game, each contestant has 12 pieces arranged on the board. While the actual playing is always done on the dark squares, the board is often shown in reverse for clarity.
+Checkers, also called draughts, board game, one of the world’s oldest games. Checkers is played by two persons who oppose each other across a board of 64 light and dark squares, the same as a chessboard. The 24 playing pieces are disk-shaped and of contrasting colours. At the start of the game, each contestant has 12 pieces arranged on the board. While the actual playing is always done on the dark squares, the board is often shown in reverse for clarity.
+
+- [Source](https://www.britannica.com/topic/checkers)
 
 # About Checkers Game:
 
@@ -16,13 +18,13 @@ Checkers remains a popular game around the world today. For many children, it’
 
 # Reviews
 
+<IMAGE>
+
 # Technologies Used:
 
 JavaScript, HTML, CSS...
 
 # Instructions:
-
-Markup :
 
 1. Take Control of the Center
    Beginners often place their checkers on the edge of the board. This seems like a reasonable strategy, because your pieces on the edge cannot be captured.
@@ -31,6 +33,45 @@ Markup :
 2. Play offensive
    Because of the possibility of forced moves, your opponent can presents you with a capture you must take. Because of this, you cannot afford to sit back and fortify.
    You could be forced to jump your checkers into oblivion at any time and no defense that you build can stand up over time.
+3. Play according to the strength of your position
+   Attack only on the strong side and defend only with on the weak side.
+4. Never move a piece without a notive
+   If you wish to become a master player, you need to learn how to "plan" and not merely live from one move to the next.
+
+5. Stick together when you advance
+   A single checker advanced can easily be jumped and captured while a checker backed up by two more checkers is immune from capture.
+   If you press forward with a few checkers then your advancing force will be much more powerful.
+
+6. Crown your pieces to kings
+   A kinged piece is incredibly powerful. The player who kings more checkers will usually win.
+   While capturing opposing checkers is generally a good thing, your biggest concern should always be kinging your own checkers.
+   Sacrifice a checker if needed
+   You should be willing to trade a capture for a capture when it advantages you.
+   Use this to capture an opponent's advanced checker or to clear out some of his base row checkers.
+
+7. Sacrificing a checker to clear a path to be kinged is always worth it.
+
+If you can trade one pieces for two, you made a good choice.
+
+8. Trade pieces when you are ahead
+   With only 12 pieces on the board for each player, it is quite possible that you may quickly end up with a 8-7 piece advantage and if you can trade four pieces, you suddenly have a 4-3 advantage which is a tremendous amount of power.
+
+9. Move your home row checkers only when you need them
+   Your opponent cannot get any kinged checkers without advancing into one of your four home spaces.
+   Keeping these spaces occupied guarantees that your opponent will get no kings until your checkers move. 10. Attack you opponents "Double Corner"
+   It is preferable to break through the Double Corner side because a piece that crowns can usually emerge there more easily than one which reaches the Single Corner.
+
+10. Be aware for kings in the endgame
+    Once only a few pieces are left on the board, the path to kingship will be open. Don't trade pieces blindly if it means that your opponent will be closer than you to get a king.
+
+11. Win by blocking
+    If you cannot move a piece on your turn, you lose.
+    If you can block in your opponent's checkers, you will win.
+
+12. Play against better players
+    While winning is fun, you can't learn much by playing against weaker players.
+
+- [Source](https://www.ultraboardgames.com/checkers/tips.php)
 
 # Wireframe:
 
