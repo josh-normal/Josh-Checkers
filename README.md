@@ -1,23 +1,21 @@
 # Josh-Checkers-Game
 
-A README.md file with these sections:
+A description of your game.
 
-☐ <Your game's title>: A description of your game. Background info of the game is a nice touch.
+Background info of the game is a nice touch.
 
-☐ Screenshot(s): Images of your actual game.
+Images/Video of your actual game.
 
-☐ Maybe video
+Technologies Used: JavaScript, HTML, CSS...
 
-☐ Technologies Used: List of the technologies used, e.g., JavaScript, HTML, CSS...
+Instructions to play
 
-☐ Getting Started: In this section include the link to your deployed game and any instructions you deem important.
+Wireframe:
+![Alt text](.img/wireframe.png)
 
-☐ Next Steps: Planned future enhancements (icebox items).
+Future enhancements
 
-☐ Pseudocode:
-Some of the app's features may need to be pseudocoded, that is, outlining the app's logic in a plain, informal way.
-Pseudocode the app's overall functionality first.
-More detailed pseudocode for a given feature may be required later.
+# Pseudocode:
 
 1. Define required constants
 
