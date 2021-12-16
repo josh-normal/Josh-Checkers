@@ -1,19 +1,20 @@
 # Josh-Checkers-Game
 
-A description of your game.
+# Description:
 
-Background info of the game is a nice touch.
+# About Checkers Game:
 
-Images/Video of your actual game.
+# Reviews
 
-Technologies Used: JavaScript, HTML, CSS...
+# Technologies Used:
 
-Instructions to play
+JavaScript, HTML, CSS...
 
-Wireframe:
-![Alt text](.img/wireframe.png)
+# Instructions:
 
-Future enhancements
+# Wireframe:
+
+![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/wireframe.png)
 
 # Pseudocode:
 
