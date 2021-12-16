@@ -2,6 +2,14 @@
 
 # Description:
 
+Today’s game of checkers developed around the start of the 12th century. A Frenchman came up with the idea of playing checkers on a chess board. At that time, the game was called “Fierges” or “Ferses.” With a new board design and new rules set, the game made its way to England and the Americas.
+
+Today, most English-speaking countries use a 64-space checker board. This is known as the short king board version. However, much of Europe and Asia use a checker board with 100 spaces. This is called the long king version. Some people in Canada even use a board with 144 spaces!
+
+Checkers remains a popular game around the world today. For many children, it’s the first game they learn how to play. Teachers have long known that the simple game of checkers can provide significant training in thought and logic. Of course, it also keeps players occupied with fun competition.
+
+- [Source](https://wonderopolis.org/wonder/Which-Came-First:-Checkers-or-Chess)
+
 # About Checkers Game:
 
 # Reviews
