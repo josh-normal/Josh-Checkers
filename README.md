@@ -2,6 +2,10 @@
 
 # Description:
 
+checkers, also called draughts, board game, one of the world’s oldest games. Checkers is played by two persons who oppose each other across a board of 64 light and dark squares, the same as a chessboard. The 24 playing pieces are disk-shaped and of contrasting colours. At the start of the game, each contestant has 12 pieces arranged on the board. While the actual playing is always done on the dark squares, the board is often shown in reverse for clarity.
+
+# About Checkers Game:
+
 Today’s game of checkers developed around the start of the 12th century. A Frenchman came up with the idea of playing checkers on a chess board. At that time, the game was called “Fierges” or “Ferses.” With a new board design and new rules set, the game made its way to England and the Americas.
 
 Today, most English-speaking countries use a 64-space checker board. This is known as the short king board version. However, much of Europe and Asia use a checker board with 100 spaces. This is called the long king version. Some people in Canada even use a board with 144 spaces!
@@ -10,8 +14,6 @@ Checkers remains a popular game around the world today. For many children, it’
 
 - [Source](https://wonderopolis.org/wonder/Which-Came-First:-Checkers-or-Chess)
 
-# About Checkers Game:
-
 # Reviews
 
 # Technologies Used:
@@ -19,6 +21,16 @@ Checkers remains a popular game around the world today. For many children, it’
 JavaScript, HTML, CSS...
 
 # Instructions:
+
+Markup :
+
+1. Take Control of the Center
+   Beginners often place their checkers on the edge of the board. This seems like a reasonable strategy, because your pieces on the edge cannot be captured.
+   But as it turns out, pushing your checkers to the edges is a mistake.
+   Try to form a pyramid shape with your pieces.
+2. Play offensive
+   Because of the possibility of forced moves, your opponent can presents you with a capture you must take. Because of this, you cannot afford to sit back and fortify.
+   You could be forced to jump your checkers into oblivion at any time and no defense that you build can stand up over time.
 
 # Wireframe:
 
