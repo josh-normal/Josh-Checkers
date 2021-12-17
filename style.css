@@ -4,6 +4,7 @@
 
 body {
   background-color: rgb(233, 205, 150);
+  background-image: url(./img/table.jpg);
   height: 100vh;
   margin: 0;
   display: flex;
@@ -28,20 +29,36 @@ body {
   margin: 0;
   padding: 0;
   height: 604px;
-  min-width: 604px;
-  background-color: black;
+  width: 604px;
+}
+table,
+th,
+td {
+  border: 1px solid white;
+  border-collapse: collapse;
 }
 tbody {
   margin: 0;
   padding: 0;
-  height: 600px;
+  height: 601.6px;
+  border: 5px solid blue;
+}
+
+tr {
+  margin: 0;
+  padding: 0;
 }
 td {
   margin: 0;
   padding: 0;
   width: 75px;
+  height: 75px;
+  border: 0.1px solid black;
   background-color: black;
-  border: 1px solid white;
+}
+td > img {
+  padding: 0;
+  width: 72px;
 }
 .yes {
   background-color: white;
@@ -77,11 +94,11 @@ p {
   margin: 40px auto;
   color: ;
 }
-.black {
+.subblack {
   border: 10px solid black;
   border-radius: 15%;
 }
-.red {
+.subred {
   border: 10px solid red;
   border-radius: 15%;
 }
@@ -105,3 +122,8 @@ button {
   font-size: 30px;
   align-self: center;
 }
+
+
+
+
+
