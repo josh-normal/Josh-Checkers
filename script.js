@@ -42,17 +42,11 @@ function render() {
 // Checker Selection, click 2nd time to un-select
 function handleClick(evt) {
     const square = evt.target;
-    validate()
-}
-
-// Validate player's checker
-function validate() {
+    // Validate player's checker
     if (square.firstChild && currentPlayer == square.className ) {
         valid = true;
-        console.log(valid)
     } else {
         valid = false;
-        console.log(valid)
     }
 }
 
