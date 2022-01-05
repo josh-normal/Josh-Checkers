@@ -92,15 +92,16 @@ p {
 .subturn1 {
   font-size: 35px;
   margin: 40px auto;
-  color: ;
+  color: red;
 }
 .subblack {
-  border: 10px solid black;
+  border: 0px solid black;
   border-radius: 15%;
 }
 .subred {
   border: 10px solid red;
   border-radius: 15%;
+  color: red;
 }
 
 .info {
@@ -112,7 +113,7 @@ p {
 .info > h1 {
   font-size: 40px;
   margin: 50px auto;
-  color: ;
+  color: red;
 }
 button {
   margin: 0;
