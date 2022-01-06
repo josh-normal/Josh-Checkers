@@ -2,7 +2,7 @@
 
 # Click the link to play game:
 
-[Play)](https://josh-normal.github.io/Josh-Checkers-Game/)
+[Play](https://josh-normal.github.io/Josh-Checkers/)
 
 # Description:
 
