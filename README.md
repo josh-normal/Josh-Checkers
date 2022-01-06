@@ -2,7 +2,8 @@
 
 # Click the link to play game:
 
-[Play](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
+[Play (for Private account)](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
+[Play (for Personal account)](https://josh-normal.github.io/Josh-Checkers-Game/)
 
 # Description:
 
