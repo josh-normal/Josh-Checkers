@@ -1,36 +1,20 @@
-// to do
-// modify king piece 
-// modify disappear error
-
-
-
-
 /* ------------ Constant ---------- */
-const sounds = {
-    btnsound: "",
-    winsound: "",
-}
+const btnsound = new Audio("./sound/button_sound.wav");
+const winsound = new Audio("./sound/win_sound.mp3");
+const table = document.querySelector('table')
 const cells = document.querySelectorAll('td')
 const validYes = document.querySelectorAll('.yes')
-// Color
 const subred = document.querySelector('.subred')
 const subblack = document.querySelector('.subblack')
 const turnText = document.querySelector('#subturn1')
 const infoText = document.querySelector('#info')
 
 /* ------------ Variable, Game state ---------- */
-
-let playerPieces;
-let currentPlayer = 'red';
 let turn = true;
-let move = false;
-let pieceEl;
 let eat = false;
-let active = true;
 let winner = false;
-let remainBlack = 12;
-let remainRed = 12;
 let pieceProperties = {
+    id: null,
     pieceId: -1,
     pieceClass: -1,
     pieceType: '',
@@ -68,25 +52,29 @@ let board = [
 ];
 
 /* ------------ Event Listener ---------- */
-// checker select: black if true and red if false
-// document.querySelector('.game').addEventListener('click', handleClick);
-for (let i = 0; i < cells.length; i++) {
-    cells[i].addEventListener("click", handleClick);
+// All DOM Click Events
+if (!winner) {
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].addEventListener("click", handleClick);
+    }
+} else {
+
 }
+// All DOM Click Sound
+table.addEventListener("click", playSound);
 // Reset Button
 document.querySelector('button').addEventListener('click', reset);
 
 
 /* ------------ Function ---------- */ 
-// Reset Game
+// Handle reset button to reset Game
 function reset() {
     turn = true;
-    active = true;
     winner = false;
-    remainBlack = 12;
-    remainRed = 12;
+    subred.querySelector('h1').textContent = 12
+    subblack.querySelector('h1').textContent = 12
     validYes.forEach(function(tdyes) {
-        tdyes.classList.remove("red", "black", "emp")})
+        tdyes.classList.remove('emp', 'red', 'black', 'blue', 'eat', 'toEat', 'king')})
     board = [
         ["red", "red", "red", "red"],
         ["red", "red", "red", "red"],
@@ -101,12 +89,16 @@ function reset() {
     highlightTurn();
 }
 
+// Handle redering all Checkers on the Board
 function render() {
     validYes.forEach(function(tdyes) {
+        tdyes.classList.remove('emp', 'red', 'black', 'blue', 'eat', 'toEat')
         tdyes.classList.add(board[parseInt(tdyes.parentElement.id)][parseInt(tdyes.classList.item(0))])
         tdyes.style.backgroundImage = "none";
         tdyes.style.backgroundColor = "white";
-        tdyes.classList.remove('blue', 'eat', 'toEat')
+        if (tdyes.classList.contains('emp')) {
+            tdyes.classList.remove('king')
+        }
     })
     let validRed = document.querySelectorAll('.red');
     validRed.forEach(function(tdred) {
@@ -126,38 +118,51 @@ function render() {
     });
 }
 
-// Checker Selection, click 2nd time to un-select
+// Handle All Click Event on the DOM
 function handleClick(evt) {
     // resetPieceProperties();
     if (turn) {
         if (evt.target.classList.contains('red') && evt.target.classList.contains('king')) {
-            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+            if (evt.target.id != pieceProperties.id && pieceProperties.id != null) {
                 resetPieceProperties();
                 render();
-                move = false
-                pieceEl = null;
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(3);
+                pieceProperties.isKing = true
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
+            } else if (evt.target.id == pieceProperties.id) {
+                resetPieceProperties();
+                render();
+            } else if (pieceProperties.id == null) {
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(3);
+                pieceProperties.isKing = true
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
             }
-            pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
-            pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
-            pieceProperties.pieceType = evt.target.classList.item(3);
-            pieceEl = evt.target
-            move = true;
-            checkPossibleMove(evt.target)
         } else if (evt.target.classList.contains('red') && !evt.target.classList.contains('king')) {
-            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+            if (evt.target.id != pieceProperties.id && pieceProperties.id != null) {
                 resetPieceProperties();
                 render();
-                move = false
-                pieceEl = null;
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(2);
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
+            } else if (evt.target.id == pieceProperties.id) {
+                resetPieceProperties();
+                render();
+            } else if (pieceProperties.id == null) {
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(2);
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
             }
-            pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
-            pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
-            pieceProperties.pieceType = evt.target.classList.item(2);
-            pieceEl = evt.target
-            move = true;
-            checkPossibleMove(evt.target)
         } else if (evt.target.classList.contains('blue')) {
-            // if (pieceProperties.pieceType) {}
             if (evt.target.classList.contains('toEat')) {
                 validYes.forEach(function(tdyes) {
                     if (tdyes.classList.contains('eat')) {
@@ -168,51 +173,67 @@ function handleClick(evt) {
                     }
                 }) 
             }
-            board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
-            move = false;
-            board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
-            evt.target.classList.toggle('emp', 'king')
-            pieceEl.classList.remove("red", 'king')
+            if (pieceProperties.isKing) {
+                board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
+                board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
+                evt.target.classList.add('king')
+                evt.target.classList.remove('emp')
+            } else {
+                board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
+                board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
+            }
             if (evt.target.parentElement.id == 7) {
                 evt.target.classList.add('king')
+                evt.target.classList.remove('emp')
             }
             resetPieceProperties()
-            changePlayer()
-            render();
-            pieceEl = null;
+            render()
+            checkForWin()
         } else {
             resetPieceProperties();
             render();
-            move = false
-            pieceEl = null;
         }
     } else if (!turn) {
         if (evt.target.classList.contains('black') && evt.target.classList.contains('king')) {
-            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+            if (evt.target.id != pieceProperties.id && pieceProperties.id != null) {
                 resetPieceProperties();
                 render();
-                move = false
-                pieceEl = null;
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(3);
+                pieceProperties.isKing = true
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
+            } else if (evt.target.id == pieceProperties.id) {
+                resetPieceProperties();
+                render();
+            } else if (pieceProperties.id == null) {
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(3);
+                pieceProperties.isKing = true
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
             }
-            pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
-            pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
-            pieceProperties.pieceType = evt.target.classList.item(3);
-            pieceEl = evt.target
-            move = true;
-            checkPossibleMove(evt.target)
         } else if (evt.target.classList.contains('black') && !evt.target.classList.contains('king')) {
-            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+            if (evt.target.id != pieceProperties.id && pieceProperties.id != null) {
                 resetPieceProperties();
                 render();
-                move = false
-                pieceEl = null;
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(2);
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
+            } else if (evt.target.id == pieceProperties.id) {
+                resetPieceProperties();
+                render();
+            } else if (pieceProperties.id == null) {
+                pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+                pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+                pieceProperties.pieceType = evt.target.classList.item(2);
+                pieceProperties.id = evt.target.id;
+                checkPossibleMove(evt.target)
             }
-            pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
-            pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
-            pieceProperties.pieceType = evt.target.classList.item(2);
-            pieceEl = evt.target
-            move = true;
-            checkPossibleMove(evt.target)
         } else if (evt.target.classList.contains('blue')) {
             // if (pieceProperties.pieceType) {}
             if (evt.target.classList.contains('toEat')) {
@@ -225,29 +246,32 @@ function handleClick(evt) {
                     }
                 })
             }
-            board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
-            move = false;
-            board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
-            evt.target.classList.toggle('emp', 'king')
-            pieceEl.classList.remove("black", 'king')
+            if (pieceProperties.isKing) {
+                board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
+                board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
+                evt.target.classList.add('king')
+                evt.target.classList.remove('emp')
+            } else {
+                board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
+                board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
+            }
             if (evt.target.parentElement.id == 0) {
                 evt.target.classList.add('king')
+                evt.target.classList.remove('emp')
             }
             resetPieceProperties()
-            changePlayer()
-            render();
-            pieceEl = null;
+            render()
+            checkForWin()
         } else {
-            resetPieceProperties();
-            render();
-            move = false
-            pieceEl = null;
+            resetPieceProperties()
+            render()
         }
     }
 }
 
-
+// Reset piece property object
 function resetPieceProperties() {
+    pieceProperties.id = null;
     pieceProperties.pieceId = -1;
     pieceProperties.pieceClass = -1;
     pieceProperties.isKing = false;
@@ -367,7 +391,9 @@ function checkPossibleMove(event) {
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
+                    
                 }
             } else if (tdyes.parentElement.id == upperRightMove.moveId && tdyes.classList.item(0) == upperRightMove.moveClass) {
                 if (!tdyes.classList.contains('red') && !tdyes.classList.contains('black')) {
@@ -384,6 +410,7 @@ function checkPossibleMove(event) {
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             } else if (tdyes.parentElement.id == lowerLeftMove.moveId && tdyes.classList.item(0) == lowerLeftMove.moveClass) {
@@ -391,16 +418,17 @@ function checkPossibleMove(event) {
                     tdyes.classList.add('blue')
                 } else if (tdyes.classList.contains('black')) {
                     validYes.forEach(function(elm) {
-                        if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == (lowerLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                        if ((elm.parentElement.id == lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && (elm.classList.item(0) == lowerLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
                             elm.classList.add('blue', 'toEat')
                             eat = true;
-                        } else if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == lowerLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                        } else if ((elm.parentElement.id == lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && (elm.classList.item(0) == lowerLeftMove.moveClass) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
                             elm.classList.add('blue', 'toEat')
                             eat = true;
                         }
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             } else if (tdyes.parentElement.id == lowerRightMove.moveId && tdyes.classList.item(0) == lowerRightMove.moveClass) {
@@ -418,6 +446,7 @@ function checkPossibleMove(event) {
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             }
@@ -439,6 +468,7 @@ function checkPossibleMove(event) {
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             } else if (tdyes.parentElement.id == upperRightMove.moveId && tdyes.classList.item(0) == upperRightMove.moveClass) {
@@ -456,6 +486,7 @@ function checkPossibleMove(event) {
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             } else if (tdyes.parentElement.id == lowerLeftMove.moveId && tdyes.classList.item(0) == lowerLeftMove.moveClass) {
@@ -466,13 +497,14 @@ function checkPossibleMove(event) {
                         if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == (lowerLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
                             elm.classList.add('blue', 'toEat')
                             eat = true;
-                        } else if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == lowerLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                        } else if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 != 0) && elm.classList.item(0) == lowerLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
                             elm.classList.add('blue', 'toEat')
                             eat = true;
                         }
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             } else if (tdyes.parentElement.id == lowerRightMove.moveId && tdyes.classList.item(0) == lowerRightMove.moveClass) {
@@ -490,12 +522,12 @@ function checkPossibleMove(event) {
                     })
                     if (eat) {
                         tdyes.classList.add('eat')
+                        eat = false
                     }
                 }
             }
         })
     }
-
     highlightMove()
 }
 
@@ -508,10 +540,9 @@ function highlightMove() {
     })
 }
 
-
 // Checks winner
 function checkForWin() {
-    if (remainBlack === 0) {
+    if (subblack.querySelector('h1').textContent == 0) {
         subred.style.borderWidth = "10px";
         subblack.style.borderWidth = "0px";
         turnText.style.color = "red";
@@ -519,7 +550,7 @@ function checkForWin() {
         infoText.style.color = "red";
         infoText.textContent = "Red Win";
         winner = true;
-    } else if (remainRed === 0) {
+    } else if (subred.querySelector('h1').textContent == 0) {
         subred.style.borderWidth = "0px";
         subblack.style.borderWidth = "10px";
         turnText.style.color = "black";
@@ -530,9 +561,13 @@ function checkForWin() {
     }
     if (!winner) {
         changePlayer();
+    } else {
+        winsound.play()
+        setTimeout(function() {
+            reset()
+        }, 10000)
     }
 }
-
 
 // Highlight Player's Turn
 function highlightTurn() {
@@ -561,5 +596,10 @@ function changePlayer() {
     highlightTurn();
 }
 
+// Play click sound
+function playSound() {
+    btnsound.play()
+}
 
+// Auto render when load Page
 render();

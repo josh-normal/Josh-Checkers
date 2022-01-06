@@ -1,7 +1,8 @@
 # Josh-Checkers-Game
 
 # Click the link to play game:
-[source](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
+
+- [Play](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
 
 # Description:
 
