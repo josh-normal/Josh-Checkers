@@ -86,7 +86,7 @@ Checkers remains a popular game around the world today. For many children, it’
 12. **Play against better players**
     - While winning is fun, you can't learn much by playing against weaker players.
 
-- [Source](https://www.ultraboardgames.com/checkers/tips.php)
+[Source](https://www.ultraboardgames.com/checkers/tips.php)
 
 # Technologies Used:
 
