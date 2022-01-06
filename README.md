@@ -2,13 +2,19 @@
 
 # Click the link to play game:
 
-- [Play](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
+[Play](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
 
 # Description:
 
 Checkers, also called draughts, board game, one of the world’s oldest games. Checkers is played by two persons who oppose each other across a board of 64 light and dark squares, the same as a chessboard. The 24 playing pieces are disk-shaped and of contrasting colours. At the start of the game, each contestant has 12 pieces arranged on the board. While the actual playing is always done on the dark squares, the board is often shown in reverse for clarity.
 
-- [Source](https://www.britannica.com/topic/checkers)
+[Source](https://www.britannica.com/topic/checkers)
+
+# Reviews
+
+![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview1.png)
+
+![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview2.png)
 
 # About Checkers Game:
 
@@ -18,17 +24,7 @@ Today, most English-speaking countries use a 64-space checker board. This is kno
 
 Checkers remains a popular game around the world today. For many children, it’s the first game they learn how to play. Teachers have long known that the simple game of checkers can provide significant training in thought and logic. Of course, it also keeps players occupied with fun competition.
 
-- [Source](https://wonderopolis.org/wonder/Which-Came-First:-Checkers-or-Chess)
-
-# Reviews
-
-![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview1.png)
-
-![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview2.png)
-
-# Technologies Used:
-
-JavaScript, HTML, CSS...
+[Source](https://wonderopolis.org/wonder/Which-Came-First:-Checkers-or-Chess)
 
 # Instructions:
 
@@ -92,35 +88,71 @@ JavaScript, HTML, CSS...
 
 - [Source](https://www.ultraboardgames.com/checkers/tips.php)
 
+# Technologies Used:
+
+JavaScript, HTML, CSS.
+
 # Wireframe:
 
 ![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/wireframe.png)
+
+# Next Step:
+
+- Making it Draggable
+- Fixing Small Bug
 
 # Pseudocode:
 
 1. Define required constants
 
-- define square that checker can go to: validSquare
--
+- define different type of squares on the table on the DOM
+- define audio element
+- define element on DOM to access text value
 
 2. Define required variables used to track the state of the game
 
-- define Current player: Red / Black
-- define game active or not: True / False
-- define winning player: ''
-- define possible move 1, 2, 3, 4(king)
-- define count down how much checkers each person has
+- define player turn by true (red player) or false (black player)
+- define winning state true or false
+- define a state if a piece can be removed or not (eat variable)
+- define selected checker properties with cordinates, value, possible move, etc
+- define possible move upperleft, upperright, lowerleft, lowerright
+- define a board array to store game state
 
 3. Handle event listener
 
+- Player clicking any square on the board
+- Make sound when player clicking on the board
+- Player click on reset button to reset the game
+
+4. Function to handle event
+
+- Player clicking Reset button
+
+  - Reset active game status
+  - Reset player move/turn
+  - Remove all player's checkers
+  - Place all player's checkers at starting point
+  - Reset countdown
+
+- Render function
+
+  - Reset player turn
+  - Reset winner state
+  - Board data
+  - Reset countdown and text
+
 - Player clicking a square
 
+  - Validate player turn (true - red, false - black)
   - Validate if the square have the checker (red & black)
-  - Validate their checker (black / red)
-  - Check if it have any possible move
-  - Show / Highlight the possible square to move
-  - Click again to undo Validation
-  - Or click another square and start again
+  - Click again to undo Validation or click another square and start again
+
+- Check Possible Move Function
+
+  - Check if the checker a King piece
+  - Check its possible move base on its location and other square
+
+- Highlight the possible square to move
 
 - Player clicking a square to make move
 
@@ -138,30 +170,6 @@ JavaScript, HTML, CSS...
     - Place the KING checker that square
   - Switch to other player turn
 
-- player clicking quit/replay button
-  - Reset active game status
-  - Reset player move/turn
-  - Remove all player's checkers
-  - Place all player's checkers at starting point
-  - Reset countdown
+- Check for winner after a move is clicked base on the remaining piece
 
-4. Function to handle event
-
-- Render function
-
-  - Reset active game status
-  - Reset player move/turn
-  - Remove all player's checkers
-  - Place all player's checkers at starting point
-  - Reset countdown
-
-- Checker Selection Function
-
-  - Validate if the square have the checker (red & black)
-  - Validate player checker turn (black / red)
-  - Click again to undo Validation
-  - Or click another square and start again
-
-- Check Possible Move Function
-
-- Handle Move Selection
+- If there is no winner yet, then change the turn to the other player
