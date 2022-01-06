@@ -1,5 +1,8 @@
 # Josh-Checkers-Game
 
+# Click the link to play game:
+[source](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
+
 # Description:
 
 Checkers, also called draughts, board game, one of the world’s oldest games. Checkers is played by two persons who oppose each other across a board of 64 light and dark squares, the same as a chessboard. The 24 playing pieces are disk-shaped and of contrasting colours. At the start of the game, each contestant has 12 pieces arranged on the board. While the actual playing is always done on the dark squares, the board is often shown in reverse for clarity.
