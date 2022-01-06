@@ -2,8 +2,7 @@
 
 # Click the link to play game:
 
-[Play (for Private account)](https://pages.git.generalassemb.ly/josh-vn/Josh-Checkers-Game/)
-[Play (for Personal account)](https://josh-normal.github.io/Josh-Checkers-Game/)
+[Play)](https://josh-normal.github.io/Josh-Checkers-Game/)
 
 # Description:
 
@@ -13,9 +12,9 @@ Checkers, also called draughts, board game, one of the world’s oldest games. C
 
 # Reviews
 
-![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview1.png)
+![Alt text](https://github.com/josh-normal/Josh-Checkers/blob/master/img/Prereview1.png)
 
-![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/Prereview2.png)
+![Alt text](https://github.com/josh-normal/Josh-Checkers/blob/master/img/Prereview2.png)
 
 # About Checkers Game:
 
