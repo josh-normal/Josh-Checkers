@@ -94,7 +94,7 @@ JavaScript, HTML, CSS.
 
 # Wireframe:
 
-![Alt text](https://git.generalassemb.ly/josh-vn/Josh-Checkers-Game/blob/master/img/wireframe.png)
+![Alt text](https://github.com/josh-normal/Josh-Checkers/blob/master/img/wireframe.png)
 
 # Next Step:
 
