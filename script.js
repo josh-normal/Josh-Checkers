@@ -1,3 +1,10 @@
+// to do
+// modify king piece 
+// modify disappear error
+
+
+
+
 /* ------------ Constant ---------- */
 const sounds = {
     btnsound: "",
@@ -18,6 +25,7 @@ let currentPlayer = 'red';
 let turn = true;
 let move = false;
 let pieceEl;
+let eat = false;
 let active = true;
 let winner = false;
 let remainBlack = 12;
@@ -97,6 +105,8 @@ function render() {
     validYes.forEach(function(tdyes) {
         tdyes.classList.add(board[parseInt(tdyes.parentElement.id)][parseInt(tdyes.classList.item(0))])
         tdyes.style.backgroundImage = "none";
+        tdyes.style.backgroundColor = "white";
+        tdyes.classList.remove('blue', 'eat', 'toEat')
     })
     let validRed = document.querySelectorAll('.red');
     validRed.forEach(function(tdred) {
@@ -106,53 +116,132 @@ function render() {
     validBlack.forEach(function(tdblack) {
         tdblack.style.backgroundImage = "url(./img/blacksmall.png)";
     });
-
+    let validKing = document.querySelectorAll('.king');
+    validKing.forEach(function(tdking) {
+        if (tdking.classList.contains('red')) {
+            tdking.style.backgroundImage = "url(./img/redCrownsmall.png)";
+        } else if (tdking.classList.contains('black')) {
+            tdking.style.backgroundImage = "url(./img/blackCrownsmall.png)";
+        }
+    });
 }
 
 // Checker Selection, click 2nd time to un-select
 function handleClick(evt) {
     // resetPieceProperties();
     if (turn) {
-        if (evt.target.classList.item(2) == 'red') {
+        if (evt.target.classList.contains('red') && evt.target.classList.contains('king')) {
+            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+                resetPieceProperties();
+                render();
+                move = false
+                pieceEl = null;
+            }
+            pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+            pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+            pieceProperties.pieceType = evt.target.classList.item(3);
+            pieceEl = evt.target
+            move = true;
+            checkPossibleMove(evt.target)
+        } else if (evt.target.classList.contains('red') && !evt.target.classList.contains('king')) {
+            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+                resetPieceProperties();
+                render();
+                move = false
+                pieceEl = null;
+            }
             pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
             pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
             pieceProperties.pieceType = evt.target.classList.item(2);
             pieceEl = evt.target
             move = true;
-            checkForKing(evt.target)
-        } else {
-            if (pieceProperties.pieceType) {
-                board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
-                move = false;
-                board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
-                pieceEl.classList.remove("red")
-                console.log(board)
-                resetPieceProperties()
-                changePlayer()
-                render();
-                pieceEl = null;
+            checkPossibleMove(evt.target)
+        } else if (evt.target.classList.contains('blue')) {
+            // if (pieceProperties.pieceType) {}
+            if (evt.target.classList.contains('toEat')) {
+                validYes.forEach(function(tdyes) {
+                    if (tdyes.classList.contains('eat')) {
+                        board[parseInt(tdyes.parentElement.id)][parseInt(tdyes.classList.item(0))] = 'emp'
+                        tdyes.classList.remove('black', 'king')
+                        let counter = parseInt(subblack.querySelector('h1').textContent) - 1;
+                        subblack.querySelector('h1').textContent = counter
+                    }
+                }) 
             }
+            board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
+            move = false;
+            board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
+            evt.target.classList.toggle('emp', 'king')
+            pieceEl.classList.remove("red", 'king')
+            if (evt.target.parentElement.id == 7) {
+                evt.target.classList.add('king')
+            }
+            resetPieceProperties()
+            changePlayer()
+            render();
+            pieceEl = null;
+        } else {
+            resetPieceProperties();
+            render();
+            move = false
+            pieceEl = null;
         }
     } else if (!turn) {
-        if (evt.target.classList.item(2) == 'black') {
+        if (evt.target.classList.contains('black') && evt.target.classList.contains('king')) {
+            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+                resetPieceProperties();
+                render();
+                move = false
+                pieceEl = null;
+            }
+            pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
+            pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
+            pieceProperties.pieceType = evt.target.classList.item(3);
+            pieceEl = evt.target
+            move = true;
+            checkPossibleMove(evt.target)
+        } else if (evt.target.classList.contains('black') && !evt.target.classList.contains('king')) {
+            if (parseInt(evt.target.classList.item(0)) != pieceProperties.pieceClass) {
+                resetPieceProperties();
+                render();
+                move = false
+                pieceEl = null;
+            }
             pieceProperties.pieceId = parseInt(evt.target.parentElement.id);
             pieceProperties.pieceClass = parseInt(evt.target.classList.item(0));
             pieceProperties.pieceType = evt.target.classList.item(2);
             pieceEl = evt.target
             move = true;
-            checkForKing(evt.target)
-        } else {
-            if (pieceProperties.pieceType) {
-                board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
-                move = false;
-                board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
-                pieceEl.classList.remove("black")
-                console.log(board)
-                resetPieceProperties()
-                changePlayer()
-                render();
-                pieceEl = null;
+            checkPossibleMove(evt.target)
+        } else if (evt.target.classList.contains('blue')) {
+            // if (pieceProperties.pieceType) {}
+            if (evt.target.classList.contains('toEat')) {
+                validYes.forEach(function(tdyes) {
+                    if (tdyes.classList.contains('eat')) {
+                        board[parseInt(tdyes.parentElement.id)][parseInt(tdyes.classList.item(0))] = 'emp'
+                        tdyes.classList.remove('red', 'king')
+                        let counter = parseInt(subred.querySelector('h1').textContent) - 1;
+                        subred.querySelector('h1').textContent = counter
+                    }
+                })
             }
+            board[parseInt(evt.target.parentElement.id)][parseInt(evt.target.classList.item(0))] = pieceProperties.pieceType
+            move = false;
+            board[pieceProperties.pieceId][pieceProperties.pieceClass] = 'emp'
+            evt.target.classList.toggle('emp', 'king')
+            pieceEl.classList.remove("black", 'king')
+            if (evt.target.parentElement.id == 0) {
+                evt.target.classList.add('king')
+            }
+            resetPieceProperties()
+            changePlayer()
+            render();
+            pieceEl = null;
+        } else {
+            resetPieceProperties();
+            render();
+            move = false
+            pieceEl = null;
         }
     }
 }
@@ -179,18 +268,14 @@ function resetPieceProperties() {
 }
 
 
-function checkForKing(event) {
+// Check Possible Move
+function checkPossibleMove(event) {
     if (event.classList.contains("king")) {
         pieceProperties.isKing = true;
     } else {
         pieceProperties.isKing = false;
     }
-    checkPossibleMove(event);
-}
 
-
-// Check Possible Move
-function checkPossibleMove(event) {
     if (pieceProperties.pieceId == 0) {
         pieceProperties.upperLeft = false
         pieceProperties.upperRight = false
@@ -218,44 +303,209 @@ function checkPossibleMove(event) {
             pieceProperties.lowerRight = false
         }
     }
-
-    if (turn) {
-        
+    
+    // adhfadfha
+    if (pieceProperties.upperLeft) {
+        upperLeftMove.moveId = pieceProperties.pieceId - 1;
+        if (pieceProperties.pieceClass == 0) {
+            upperLeftMove.moveClass = 0
+        } else if (pieceProperties.pieceClass >= 1 && (pieceProperties.pieceId % 2 === 0)) {
+            upperLeftMove.moveClass = pieceProperties.pieceClass - 1
+        } else if (pieceProperties.pieceClass >= 1 && (pieceProperties.pieceId % 2 !== 0)) {
+            upperLeftMove.moveClass = pieceProperties.pieceClass
+        }
     }
 
+    if (pieceProperties.upperRight) {
+        upperRightMove.moveId = pieceProperties.pieceId - 1;
+        if (pieceProperties.pieceClass == 3) {
+            upperRightMove.moveClass = 3
+        } else if (pieceProperties.pieceClass <= 2 && (pieceProperties.pieceId % 2 === 0)) {
+            upperRightMove.moveClass = pieceProperties.pieceClass
+        } else if (pieceProperties.pieceClass <= 2 && (pieceProperties.pieceId % 2 !== 0)) {
+            upperRightMove.moveClass = pieceProperties.pieceClass + 1
+        }
+    }
 
-    validatePossibleMove();
-}
+    if (pieceProperties.lowerLeft) {
+        lowerLeftMove.moveId = pieceProperties.pieceId + 1;
+        if (pieceProperties.pieceClass == 0) {
+            lowerLeftMove.moveClass = 0
+        } else if (pieceProperties.pieceClass >= 1 && (pieceProperties.pieceId % 2 === 0)) {
+            lowerLeftMove.moveClass = pieceProperties.pieceClass - 1
+        } else if (pieceProperties.pieceClass >= 1 && (pieceProperties.pieceId % 2 !== 0)) {
+            lowerLeftMove.moveClass = pieceProperties.pieceClass
+        }
+    }
 
-// let upperLeftMove = {
-//     moveId: -1,
-//     moveClass: -1,
-// };
-// let upperRightMove = {
-//     moveId: -1,
-//     moveClass: -1,
-// };
-// let lowerLeftMove = {
-//     moveId: -1,
-//     moveClass: -1,
-// };
-// let lowerRightMove = {
-//     moveId: -1,
-//     moveClass: -1,
-// };
+    if (pieceProperties.lowerRight) {
+        lowerRightMove.moveId = pieceProperties.pieceId + 1;
+        if (pieceProperties.pieceClass == 3) {
+            lowerRightMove.moveClass = 3
+        } else if (pieceProperties.pieceClass <= 2 && (pieceProperties.pieceId % 2 === 0)) {
+            lowerRightMove.moveClass = pieceProperties.pieceClass
+        } else if (pieceProperties.pieceClass <= 2 && (pieceProperties.pieceId % 2 !== 0)) {
+            lowerRightMove.moveClass = pieceProperties.pieceClass + 1
+        }
+    }
 
+    if (turn) {
+        validYes.forEach(function(tdyes) {
+            if (tdyes.parentElement.id == upperLeftMove.moveId && tdyes.classList.item(0) == upperLeftMove.moveClass) {
+                if (!tdyes.classList.contains('red') && !tdyes.classList.contains('black')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('black')) {
+                    // tdyes.classList.remove('blue')
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (upperLeftMove.moveId - 1) && (upperLeftMove.moveId % 2 == 0) && elm.classList.item(0) == (upperLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (upperLeftMove.moveId - 1) && (upperLeftMove.moveId % 2 != 0) && elm.classList.item(0) == upperLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            } else if (tdyes.parentElement.id == upperRightMove.moveId && tdyes.classList.item(0) == upperRightMove.moveClass) {
+                if (!tdyes.classList.contains('red') && !tdyes.classList.contains('black')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('black')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (upperRightMove.moveId - 1) && (upperRightMove.moveId % 2 == 0) && elm.classList.item(0) == upperRightMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (upperRightMove.moveId - 1) && (upperRightMove.moveId % 2 != 0) && elm.classList.item(0) == (upperRightMove.moveClass + 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            } else if (tdyes.parentElement.id == lowerLeftMove.moveId && tdyes.classList.item(0) == lowerLeftMove.moveClass) {
+                if (!tdyes.classList.contains('red') && !tdyes.classList.contains('black')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('black')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == (lowerLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == lowerLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            } else if (tdyes.parentElement.id == lowerRightMove.moveId && tdyes.classList.item(0) == lowerRightMove.moveClass) {
+                if (!tdyes.classList.contains('red') && !tdyes.classList.contains('black')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('black')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (lowerRightMove.moveId + 1) && (lowerRightMove.moveId % 2 == 0) && elm.classList.item(0) == lowerRightMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (lowerRightMove.moveId + 1) && (lowerRightMove.moveId % 2 != 0) && elm.classList.item(0) == lowerRightMove.moveClass + 1 && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            }
+        })
+    } else {
+        validYes.forEach(function(tdyes) {
+            if (tdyes.parentElement.id == upperLeftMove.moveId && tdyes.classList.item(0) == upperLeftMove.moveClass) {
+                if (!tdyes.classList.contains('black') && !tdyes.classList.contains('red')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('red')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (upperLeftMove.moveId - 1) && (upperLeftMove.moveId % 2 == 0) && elm.classList.item(0) == (upperLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (upperLeftMove.moveId - 1) && (upperLeftMove.moveId % 2 != 0) && elm.classList.item(0) == upperLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            } else if (tdyes.parentElement.id == upperRightMove.moveId && tdyes.classList.item(0) == upperRightMove.moveClass) {
+                if (!tdyes.classList.contains('black') && !tdyes.classList.contains('red')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('red')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (upperRightMove.moveId - 1) && (upperRightMove.moveId % 2 == 0) && elm.classList.item(0) == upperRightMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (upperRightMove.moveId - 1) && (upperRightMove.moveId % 2 != 0) && elm.classList.item(0) == (upperRightMove.moveClass + 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            } else if (tdyes.parentElement.id == lowerLeftMove.moveId && tdyes.classList.item(0) == lowerLeftMove.moveClass) {
+                if (!tdyes.classList.contains('black') && !tdyes.classList.contains('red')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('red')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == (lowerLeftMove.moveClass - 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (lowerLeftMove.moveId + 1) && (lowerLeftMove.moveId % 2 == 0) && elm.classList.item(0) == lowerLeftMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            } else if (tdyes.parentElement.id == lowerRightMove.moveId && tdyes.classList.item(0) == lowerRightMove.moveClass) {
+                if (!tdyes.classList.contains('black') && !tdyes.classList.contains('red')) {
+                    tdyes.classList.add('blue')
+                } else if (tdyes.classList.contains('red')) {
+                    validYes.forEach(function(elm) {
+                        if (elm.parentElement.id == (lowerRightMove.moveId + 1) && (lowerRightMove.moveId % 2 == 0) && elm.classList.item(0) == lowerRightMove.moveClass && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        } else if (elm.parentElement.id == (lowerRightMove.moveId + 1) && (lowerRightMove.moveId % 2 != 0) && elm.classList.item(0) == (lowerRightMove.moveClass + 1) && !elm.classList.contains('red') && !elm.classList.contains('black')) {
+                            elm.classList.add('blue', 'toEat')
+                            eat = true;
+                        }
+                    })
+                    if (eat) {
+                        tdyes.classList.add('eat')
+                    }
+                }
+            }
+        })
+    }
 
-function validatePossibleMove() {
-    
-
-
-
-    highlightMove();
+    highlightMove()
 }
 
 // Highlight Possible Move
 function highlightMove() {
-
+    validYes.forEach(function(tdyes) {
+        if (tdyes.classList.contains('blue')) {
+            tdyes.style.backgroundColor = 'lightblue'
+        }
+    })
 }
 
 
